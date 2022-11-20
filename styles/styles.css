@@ -6,6 +6,7 @@
   --third-color: #ffffff;
   --background-color: #2f303a;
   --border-color: #ececec;
+  --cubic: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .body {
@@ -79,7 +80,7 @@ img {
 .link:hover,
 .link:focus {
   color: var(--accent-color);
-  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: color 250ms var(--cubic);
 }
 
 /*Header*/
@@ -149,8 +150,7 @@ nav {
   text-decoration: none;
   color: var(--second-color);
   fill: var(--second-color);
-  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1),
-    fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: color 250ms var(--cubic), fill 250ms var(--cubic);
 }
 
 .link-connection a:hover,
@@ -160,7 +160,7 @@ nav {
 }
 
 .link-connection a {
-  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: color 250ms var(--cubic);
 }
 
 .navigation-thumb {
@@ -195,10 +195,8 @@ nav {
   text-align: center;
 
   background: #2f303a;
-  background-image: linear-gradient(
-      rgba(47, 48, 58, 0.4),
-      rgba(47, 48, 58, 0.4)
-    ),
+  background-image: linear-gradient(rgba(47, 48, 58, 0.4),
+      rgba(47, 48, 58, 0.4)),
     url(../img/hero-description-bg.img.jpg);
   background-size: cover;
   background-position: center;
@@ -235,7 +233,7 @@ nav {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
   border: 0px;
   border-radius: 4px;
-  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color 250ms var(--cubic);
 }
 
 .button-pointer:hover,
@@ -252,20 +250,13 @@ nav {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.2);
-  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1),
-    scale 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 250ms var(--cubic), scale 250ms var(--cubic);
 }
 
 .backdrop.is-hidden {
   opacity: 0;
   pointer-events: none;
 }
-
-/* .is-hidden { 
-  visibility: hidden;
-  opacity: 0;
-  pointer-events: none;
-}*/
 
 .modal {
   position: absolute;
@@ -283,8 +274,9 @@ nav {
   transition: transform 250ms var(--cubic), scale 250ms var(--cubic),
     opacity 250ms var(--cubic);
 }
+
 /* close button */
-.modal > button {
+.modal>button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -299,10 +291,12 @@ nav {
   cursor: pointer;
   transition: fill 250ms var(--cubic);
 }
-.modal > button:hover,
-.modal > button:focus {
+
+.modal>button:hover,
+.modal>button:focus {
   fill: var(--accent-color);
 }
+
 form p {
   margin-top: 0;
   margin-bottom: 12px;
@@ -312,6 +306,7 @@ form p {
   text-align: center;
   color: #212121;
 }
+
 .modal-input {
   margin: 0;
   padding: 0;
@@ -322,24 +317,29 @@ form p {
   padding-left: 40px;
   transition: border-color 250ms var(--cubic), fill 250ms var(--cubic);
 }
+
 .modal-input:focus-visible,
 .modal-input:hover {
   outline: none;
   border-color: var(--accent-color);
 }
-.modal-input:focus ~ .input-icon,
-.modal-input:hover ~ .input-icon {
+
+.modal-input:focus~.input-icon,
+.modal-input:hover~.input-icon {
   fill: var(--accent-color);
 }
+
 .input-line {
   display: flex;
   position: relative;
   flex-direction: column;
   margin-bottom: 10px;
 }
+
 .input-line label {
   padding-bottom: 4px;
 }
+
 .input-icon {
   position: absolute;
   left: 13px;
@@ -356,49 +356,66 @@ form p {
   resize: none;
   transition: border-color 250ms var(--cubic);
 }
+
 .modal-feedback:focus,
 .modal-feedback:hover {
   outline: none;
   border-color: var(--accent-color);
 }
-/* label */
-.checkbox-agree {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 24px;
-  margin: 20px auto 30px;
-}
-.checkbox-agree input {
+
+/* checkbox */
+.modal-form-checkbox {
   position: absolute;
   width: 1px;
   height: 1px;
+  margin: -1px;
+  flex-shrink: 0;
   overflow: hidden;
   border: 0;
+  border-radius: 2px;
+  clip: rect(0 0 0 0);
   padding: 0;
 }
-.checkbox-agree a {
-  line-height: 1.7;
-  margin-left: 5px;
+
+.modal-form-custom-checkbox {
+  display: inline-flex;
+  align-self: center;
+  justify-content: center;
+  width: 16px;
+  height: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border: 2px solid #212121;
+}
+
+.modal-form-checkbox-icon {
+  display: block;
+  align-self: center;
+  justify-content: center;
+  opacity: 0;
+}
+
+.modal-form-checkbox:checked+.modal-form-custom-checkbox {
+  background-color: var(--accent-color);
+  border: 1px solid var(--accent-color);
+}
+
+.modal-form-checkbox:checked+.modal-form-custom-checkbox .modal-form-checkbox-icon {
+  opacity: 1;
+  fill: var(--second-color);
+}
+
+.checkbox-agree {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.modal-form-link {
+  text-decoration: underline;
   color: var(--accent-color);
 }
 
-.checkbox:checked + .checkbox-icon {
-  background-color: var(--accent-color);
-  border-color: #2196f3;
-  background-image: url(../img/check-mark.svg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-.checkbox-icon {
-  display: inline-block;
-  width: 16px;
-  height: 15px;
-  margin-right: 8px;
-  border: 2px solid #212121;
-  border-radius: 2px;
-}
 .submit {
   display: block;
   margin: 0 auto;
@@ -599,7 +616,6 @@ form p {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  /* background-color: chartreuse; */
 }
 
 .social-link {
@@ -766,13 +782,15 @@ footer .container {
   background-color: var(--accent-color);
   border-radius: 50%;
 }
+
 /* SUBSCRIBTION */
 .subscribe {
   display: flex;
-
+  flex-direction: column;
   align-items: baseline;
   margin-left: 70px;
 }
+
 .subscribe-form {
   display: flex;
   align-items: center;
@@ -787,6 +805,7 @@ footer .container {
   text-transform: uppercase;
   color: #fff;
 }
+
 .subscribe input {
   width: 358px;
   height: 50px;
@@ -796,6 +815,14 @@ footer .container {
   border-radius: 4px;
   padding-left: 16px;
   color: var(--third-color);
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.15));
+}
+
+.subscribe input:focus-visible,
+.subscribe input:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  outline: none;
+  transition: border-color 250ms var(--cubic);
 }
 
 .subscribe button {
@@ -813,6 +840,7 @@ footer .container {
   background-color: var(--accent-color);
   color: var(--third-color);
 }
+
 .icon-send {
   display: inline-block;
   fill: var(--third-color);
